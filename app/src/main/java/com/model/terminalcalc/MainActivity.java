@@ -17,11 +17,16 @@ import com.model.terminalcalc.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    private Calculator mCalculator;
+
+    private String[] TIPE_OPERASI = new String[] {"ADD", "SUBTRACT", "MULTIPLY", "DIVIDE", "SPLITEQ", "SPLITNUM"};
+    private String selectedItem = "ADD";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,20 +34,112 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         setSupportActionBar(binding.toolbar);
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        mCalculator = new Calculator();
+        OperationTypeAdapter operationTypeAdapter = new OperationTypeAdapter(getApplicationContext(), TIPE_OPERASI);
+        binding.contentIcl.operationTypeSpinner.setAdapter(operationTypeAdapter);
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
+        binding.contentIcl.btnAddValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                String inputText = String.valueOf(binding.contentIcl.inputTf.getText());
+                if(!binding.contentIcl.inputAddValue.getText().equals("")){
+                    String addValueText = String.valueOf(binding.contentIcl.inputAddValue.getText());
+                    inputText += (", " + addValueText);
+                    binding.contentIcl.inputTf.setText(inputText);
+                    binding.contentIcl.inputAddValue.setText("");
+                }
             }
         });
+
+        binding.contentIcl.btnEvaluate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(validateInput()){
+                    // operation
+
+                }
+//                if(selectedItem.equals("ADD") ||
+//                        selectedItem.equals("SUBTRACT") ||
+//                        selectedItem.equals("MULTIPLY") ||
+//                        selectedItem.equals("SPLITNUM")
+//                ) {
+//
+//                } else if( selectedItem.equals("DIVIDE") ||
+//                        selectedItem.equals("SPLITEQ")
+//                ) {
+//
+//                }
+            }
+        });
+
+        binding.contentIcl.operationTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                // TODO Auto-generated method stub
+                resetAllField();
+                String item = TIPE_OPERASI[position];
+                if (item == "ADD") {
+
+                } else if (item == "SUBTRACT") {
+
+                } else if (item == "MULTIPLY") {
+
+                } else if (item == "SPLITNUM") {
+
+                } else if (item == "DIVIDE") {
+                    hideFirstLinearLayout();
+                } else if (item == "SPLITEQ") {
+                    hideFirstLinearLayout();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+
+    }
+
+    private void doCalculate() {
+        Integer selectedIdx = binding.contentIcl.operationTypeSpinner.getSelectedItemPosition();
+        if(TIPE_OPERASI[selectedIdx].equals(""))
+        {
+
+        }
+    }
+
+    private void resetAllField() {
+        binding.contentIcl.inputTf.setText("");
+        binding.contentIcl.outputTf.setText("");
+        hideSecondLinearLayout();
+        binding.contentIcl.operationTypeSpinner.setSelection(0);
+    }
+
+    private Boolean validateInput() {
+        Boolean valid = false;
+        if(!binding.contentIcl.inputTf.equals("")){
+            valid = true;
+        }
+        return valid;
+    }
+
+    private void hideFirstLinearLayout() {
+        binding.contentIcl.inputAddValue.setText("");
+        binding.contentIcl.firstLl.setVisibility(View.GONE);
+        binding.contentIcl.secondLl.setVisibility(View.VISIBLE);
+    }
+
+    private void hideSecondLinearLayout() {
+        binding.contentIcl.inputFirstValue.setText("");
+        binding.contentIcl.inputSecondValue.setText("");
+        binding.contentIcl.secondLl.setVisibility(View.GONE);
+        binding.contentIcl.firstLl.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -69,8 +166,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
+        super.onSupportNavigateUp();
+        return true;
     }
 }

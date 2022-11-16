@@ -18,7 +18,7 @@
         app:boxBackgroundColor="@android:color/white"
         android:layout_marginTop="6dp">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_input"
+            android:id="@+id/input_tf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:editable="false"
@@ -35,29 +35,12 @@
         app:boxBackgroundColor="@android:color/white"
         android:layout_marginTop="6dp">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/output_input"
+            android:id="@+id/output_tf"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:editable="false"
+            android:layout_height="144dp"
             android:focusable="false"
             android:hint="OUTPUT*" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!--  Nama Label -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/nama_til"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxBackgroundColor="@android:color/white"
-        android:layout_marginTop="6dp">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_nama"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:editable="false"
-            android:focusable="false"
-            android:hint="Nama*" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -67,7 +50,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
-        android:text="Tipe Fungsi "
+        android:text="Tipe Operasi "
         android:gravity="center"
         android:textSize="16sp"
         android:textStyle="bold" />
@@ -79,7 +62,7 @@
         android:layout_width="match_parent" android:layout_height="wrap_content" tools:ignore="UselessParent">
 
         <Spinner
-            android:id="@+id/permissionTypeSpinner"
+            android:id="@+id/operationTypeSpinner"
             android:layout_width="match_parent"
             android:overlapAnchor="false"
             android:layout_margin="1dp"
@@ -89,6 +72,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/first_ll"
         android:layout_centerInParent="true"
         android:layout_marginTop="12dp"
         android:gravity="center"
@@ -115,14 +99,68 @@
             android:id="@+id/btn_add_value"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_weight="0.5"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             style="@style/Widget.MaterialComponents.Button"
             app:cornerRadius="12dp"
             android:textColor="#ffffff"
-            android:padding="12dp"
             android:text="Tambahkan Nilai"/>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/second_ll"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent" android:layout_height="wrap_content" tools:ignore="UselessParent">
+
+        <!--  Tambah Nilai Label -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/first_param_til"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxBackgroundColor="@android:color/white">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_first_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="Sebuah Nilai*" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--  Tambah Nilai Label -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/second_param_til"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxBackgroundColor="@android:color/white">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_second_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="Nilai Pembagi*" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_evaluate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        style="@style/Widget.MaterialComponents.Button"
+        app:cornerRadius="12dp"
+        android:textColor="#ffffff"
+        android:padding="12dp"
+        android:text="TAMPILKAN HASIL"/>
 
 </LinearLayout>
