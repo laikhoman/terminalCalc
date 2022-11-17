@@ -60,7 +60,7 @@ public class Calculator {
             if(i!=0) value += currentVal;
             else firstVal = currentVal;
         }
-        value = firstVal - (firstVal/value)*value;
+        value = firstVal - (firstVal / value)*value;
         return value;
     }
 
