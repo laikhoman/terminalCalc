@@ -2,7 +2,7 @@
 <LinearLayout android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="24dp"
+    android:paddingTop="48dp"
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -85,6 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
+            android:inputType="number"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxBackgroundColor="@android:color/white">
             <com.google.android.material.textfield.TextInputEditText
@@ -114,6 +115,7 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="12dp"
         android:gravity="center"
+        android:visibility="gone"
         android:orientation="horizontal"
         android:layout_width="match_parent" android:layout_height="wrap_content" tools:ignore="UselessParent">
 
@@ -123,6 +125,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
+            android:inputType="number"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxBackgroundColor="@android:color/white">
             <com.google.android.material.textfield.TextInputEditText
@@ -139,6 +142,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
+            android:inputType="number"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxBackgroundColor="@android:color/white">
             <com.google.android.material.textfield.TextInputEditText

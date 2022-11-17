@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String[] TIPE_OPERASI = new String[] {"ADD", "SUBTRACT", "MULTIPLY", "DIVIDE", "SPLITEQ", "SPLITNUM"};
     private String selectedItem = "ADD";
+    private Boolean reset = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
                 String inputText = String.valueOf(binding.contentIcl.inputTf.getText());
                 if(!binding.contentIcl.inputAddValue.getText().equals("")){
                     String addValueText = String.valueOf(binding.contentIcl.inputAddValue.getText());
-                    inputText += (", " + addValueText);
+                    if (reset) inputText += ("" + addValueText);
+                    else inputText += (", " + addValueText);
+                    reset = false;
                     binding.contentIcl.inputTf.setText(inputText);
                     binding.contentIcl.inputAddValue.setText("");
                 }
@@ -56,21 +59,23 @@ public class MainActivity extends AppCompatActivity {
         binding.contentIcl.btnEvaluate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(validateInput()){
-                    // operation
-
+                Integer selectedIdx = binding.contentIcl.operationTypeSpinner.getSelectedItemPosition();
+                selectedItem = TIPE_OPERASI[selectedIdx];
+                if(selectedItem.equals("ADD") ||
+                        selectedItem.equals("SUBTRACT") ||
+                        selectedItem.equals("MULTIPLY") ||
+                        selectedItem.equals("SPLITNUM")
+                ) {
+                    if(validateInput1()){
+                        doCalculate();
+                    }
+                } else if( selectedItem.equals("DIVIDE") ||
+                        selectedItem.equals("SPLITEQ")
+                ) {
+                    if(validateInput2()){
+                        doCalculate();
+                    }
                 }
-//                if(selectedItem.equals("ADD") ||
-//                        selectedItem.equals("SUBTRACT") ||
-//                        selectedItem.equals("MULTIPLY") ||
-//                        selectedItem.equals("SPLITNUM")
-//                ) {
-//
-//                } else if( selectedItem.equals("DIVIDE") ||
-//                        selectedItem.equals("SPLITEQ")
-//                ) {
-//
-//                }
             }
         });
 
@@ -83,13 +88,13 @@ public class MainActivity extends AppCompatActivity {
                 resetAllField();
                 String item = TIPE_OPERASI[position];
                 if (item == "ADD") {
-
+                    hideSecondLinearLayout();
                 } else if (item == "SUBTRACT") {
-
+                    hideSecondLinearLayout();
                 } else if (item == "MULTIPLY") {
-
+                    hideSecondLinearLayout();
                 } else if (item == "SPLITNUM") {
-
+                    hideSecondLinearLayout();
                 } else if (item == "DIVIDE") {
                     hideFirstLinearLayout();
                 } else if (item == "SPLITEQ") {
@@ -108,22 +113,53 @@ public class MainActivity extends AppCompatActivity {
 
     private void doCalculate() {
         Integer selectedIdx = binding.contentIcl.operationTypeSpinner.getSelectedItemPosition();
-        if(TIPE_OPERASI[selectedIdx].equals(""))
+        if(TIPE_OPERASI[selectedIdx].equals("ADD"))
         {
-
+            int output = mCalculator.add(String.valueOf(binding.contentIcl.inputTf.getText()));
+            binding.contentIcl.outputTf.setText(String.valueOf(output));
+        } else if(TIPE_OPERASI[selectedIdx].equals("SUBTRACT")) {
+            int output = mCalculator.subtract(String.valueOf(binding.contentIcl.inputTf.getText()));
+            binding.contentIcl.outputTf.setText(String.valueOf(output));
+        } else if(TIPE_OPERASI[selectedIdx].equals("MULTIPLY")) {
+            int output = mCalculator.multiply(String.valueOf(binding.contentIcl.inputTf.getText()));
+            binding.contentIcl.outputTf.setText(String.valueOf(output));
+        } else if(TIPE_OPERASI[selectedIdx].equals("SPLITNUM")) {
+            int output = mCalculator.splitNum(String.valueOf(binding.contentIcl.inputTf.getText()));
+            binding.contentIcl.outputTf.setText(String.valueOf(output));
+        } else if(TIPE_OPERASI[selectedIdx].equals("DIVIDE")) {
+            int output = mCalculator.divide(
+                    Integer.valueOf(String.valueOf(binding.contentIcl.inputFirstValue.getText())),
+                    Integer.valueOf(String.valueOf(binding.contentIcl.inputSecondValue.getText()))
+            );
+            binding.contentIcl.outputTf.setText(String.valueOf(output));
+        } else if(TIPE_OPERASI[selectedIdx].equals("SPLITEQ")) {
+            String output = mCalculator.splitEq(
+                    Integer.valueOf(String.valueOf(binding.contentIcl.inputFirstValue.getText())),
+                    Integer.valueOf(String.valueOf(binding.contentIcl.inputSecondValue.getText()))
+            );
+            binding.contentIcl.outputTf.setText(output);
         }
     }
 
     private void resetAllField() {
+        reset = true;
         binding.contentIcl.inputTf.setText("");
         binding.contentIcl.outputTf.setText("");
         hideSecondLinearLayout();
-        binding.contentIcl.operationTypeSpinner.setSelection(0);
     }
 
-    private Boolean validateInput() {
+    private Boolean validateInput1() {
         Boolean valid = false;
-        if(!binding.contentIcl.inputTf.equals("")){
+        if(!String.valueOf(binding.contentIcl.inputTf.getText()).equals("")){
+            valid = true;
+        }
+        return valid;
+    }
+
+    private Boolean validateInput2() {
+        Boolean valid = false;
+        if(!String.valueOf(binding.contentIcl.inputFirstValue.getText()).equals("")
+        && !String.valueOf(binding.contentIcl.inputSecondValue.getText()).equals("")){
             valid = true;
         }
         return valid;
