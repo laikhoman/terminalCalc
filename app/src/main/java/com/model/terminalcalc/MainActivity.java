@@ -5,6 +5,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -151,6 +152,10 @@ public class MainActivity extends AppCompatActivity {
         if(!String.valueOf(binding.contentIcl.inputFirstValue.getText()).equals("")
         && !String.valueOf(binding.contentIcl.inputSecondValue.getText()).equals("")){
             valid = true;
+        }
+        if(String.valueOf(binding.contentIcl.inputSecondValue.getText()).equals("0")){
+            valid = false;
+            Toast.makeText(this, "Nilai pembagi tidak boleh nol", Toast.LENGTH_SHORT).show();
         }
         return valid;
     }
